@@ -1,25 +1,9 @@
-# ReduxSimpleStarter
+# reactblog
 
-Interested in learning [Redux](https://www.udemy.com/react-redux/)?
+### This application allows the user to easily create, read, update, and delete blog posts.
 
-### Getting Started
+* Posts data is loaded from the api once the PostsIndex component mounts and utilizes redux-promise as middleware before the action hits the reducer to handle the asynchronous network call.
 
-There are two methods for getting started with this repo.
 
-#### Familiar with Git?
-Checkout this repo, install dependencies, then start the gulp process with the following:
 
-```
-> git clone https://github.com/StephenGrider/ReduxSimpleStarter.git
-> cd ReduxSimpleStarter
-> npm install
-> npm start
-```
-
-#### Not Familiar with Git?
-Click [here](https://github.com/StephenGrider/ReactStarter/releases) then download the .zip file.  Extract the contents of the zip file, then open your terminal, change to the project directory, and:
-
-```
-> npm install
-> npm start
-```
+_This project was bootstrapped with the [ReduxSimpleStarter](https://github.com/StephenGrider/ReduxSimpleStarter) package._
