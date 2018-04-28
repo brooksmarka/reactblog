@@ -3,16 +3,20 @@ import { Field, reduxForm} from 'redux-form';
 
 class PostsNew extends Component {
 
-  renderField(field){                     //field contains event handlers which makes sure Field deals with this text input
+  renderField(field){    //field contains event handlers which makes sure Field deals with this text input
+
+    const className = `form-group ${field.meta.touched && field.meta.error ? 'has-danger' : ''}`;
     return(
-      <div className="form-group">
+      <div className={className}>
         <label> {field.label} </label>
         <input
           className="form-control"
           type="text"
           {...field.input}                //contains pregenerated event handlers ... passes all these as props
         />
-        {field.meta.touched ? field.meta.error : ''}
+        <div className="text-help">
+          {field.meta.touched ? field.meta.error : ''}
+        </div>
       </div>
     );
   }
@@ -52,8 +56,8 @@ function validate(values){
   const errors = {};
   //Validate the inputs from 'values'
   //properties must match the 'name' property in <Field /> for validation to work
-  if(!values.title || values.title < 3){
-    errors.title = "Please enter a title that is at least 3 characters!";
+  if(!values.title){
+    errors.title = "Please enter a title!";
   }
   if(!values.categories){
     errors.categories = "Please enter a category!";
