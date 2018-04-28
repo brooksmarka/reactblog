@@ -3,30 +3,71 @@ import { Field, reduxForm} from 'redux-form';
 
 class PostsNew extends Component {
 
-  renderTitleField(field){  //field contains event handlers which makes sure Field deals with this text input
+  renderField(field){                     //field contains event handlers which makes sure Field deals with this text input
     return(
-      <div>
+      <div className="form-group">
+        <label> {field.label} </label>
         <input
+          className="form-control"
           type="text"
-          {...field.input}  //contains pregenerated event handlers ... passes all these as props
+          {...field.input}                //contains pregenerated event handlers ... passes all these as props
         />
+        {field.meta.touched ? field.meta.error : ''}
       </div>
-
     );
   }
 
+  onSubmit(values){
+    console.log(values);
+  }
+
   render() {
+    const { handleSubmit } = this.props;  //handleSubmit is a method from reduxForm
     return (
-      <form>
-        <Field        //used to describe unique input in form.  Communicates with reduxForm
+      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        <Field                           //used to describe unique input in form.  Communicates with reduxForm
+          label="Title"
           name="title"
-          component={this.renderTitleField}  //tells Field what to look like when displayed
+          component={this.renderField}   //tells Field what to look like when displayed
         />
+        <Field
+          label="Categories"
+          name="categories"
+          component={this.renderField}
+        />
+        <Field
+          label="Content"
+          name="content"
+          component={this.renderField}
+        />
+        <button type="submit" className="btn btn-success">Submit</button>
       </form>
     );
   }
 }
 
-export default reduxForm({   //wraps reduxForm around PostsNew
-  form: 'PostsNewForm'       //namespace for this specific form component
+function validate(values){
+  //console.log(values) -> {title: 'asdf', categories: 'asdf', content: 'asdf'}
+
+  const errors = {};
+  //Validate the inputs from 'values'
+  //properties must match the 'name' property in <Field /> for validation to work
+  if(!values.title || values.title < 3){
+    errors.title = "Please enter a title that is at least 3 characters!";
+  }
+  if(!values.categories){
+    errors.categories = "Please enter a category!";
+  }
+  if(!values.content){
+    errors.content = "Please enter some content!";
+  }
+  // If errors is empty, the form is fine to submit
+  // If errors has *any* properties, redux form assumes form is invalid
+
+  return errors;
+}
+
+export default reduxForm({              //wraps reduxForm around PostsNew
+  validate,
+  form: 'PostsNewForm'                  //namespace for this specific form component
 })(PostsNew);
