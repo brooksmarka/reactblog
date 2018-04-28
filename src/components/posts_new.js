@@ -5,7 +5,8 @@ class PostsNew extends Component {
 
   renderField(field){    //field contains event handlers which makes sure Field deals with this text input
 
-    const className = `form-group ${field.meta.touched && field.meta.error ? 'has-danger' : ''}`;
+    const { meta: { touched, error } } = field;
+    const className = `form-group ${touched && error ? 'has-danger' : ''}`;
     return(
       <div className={className}>
         <label> {field.label} </label>
@@ -15,7 +16,7 @@ class PostsNew extends Component {
           {...field.input}                //contains pregenerated event handlers ... passes all these as props
         />
         <div className="text-help">
-          {field.meta.touched ? field.meta.error : ''}
+          {touched ? error : ''}
         </div>
       </div>
     );
